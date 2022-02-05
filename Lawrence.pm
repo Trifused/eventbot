@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # code by Robert Alexander
 # robert@paperhouse.io
-# https://github.com/rta10
+# https://github.com/mkmothra
 
 package Lawrence;
 
@@ -43,7 +43,7 @@ sub send_text {
 	my $ua = LWP::UserAgent->new;
 		$ua->agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:55.0) Gecko/20100101 Firefox/55.0');
 		$ua->cookie_jar(HTTP::Cookies->new);
-		$ua->timeout(10);
+		$ua->timeout(30);
 
 	my %text_notification = (
 		From => $from_number,

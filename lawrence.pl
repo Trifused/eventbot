@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # code by Robert Alexander
 # robert@paperhouse.io
-# https://github.com/rta10
+# https://github.com/mkmothra
 
 use strict;
 use warnings;
@@ -18,7 +18,7 @@ use Lawrence;
 
 # --------------------------------------------------
 
-my $dbh = DBI->connect("DBI:mysql:lawrence", 'lawrence', 'C00ldr1nk!!') or die "Could not connect to database";
+my $dbh = DBI->connect("DBI:mysql:eventbot", 'eventbot', 'C00ldr1nk!!') or die "Could not connect to database";
 my $domain = 'https://lawrence.paperhouse.cc/';
 
 # --------------------------------------------------
@@ -82,6 +82,8 @@ post '/twilio' => sub {
 	Lawrence::update_main_log($dbh, $Body, $domain.$file_name);
 
   }
+
+  else { }
 
 } => 'twilio';
 
