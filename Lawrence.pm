@@ -12,6 +12,16 @@ use HTTP::Cookies;
 use DBI;
 use Image::ExifTool;
 
+sub gen_token {
+
+	my @characters = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+
+	my $token = $characters[rand @characters].$characters[rand @characters].$characters[rand @characters].$characters[rand @characters].$characters[rand @characters].(int(rand(9999999999))+100000);
+
+	return ($token);
+
+}
+
 sub name_file {
 
 	my @characters = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
@@ -24,14 +34,10 @@ sub name_file {
 
 sub meta_info  {
 
-	my ($file, $origin_url) = (shift, shift);
-
-	my $right_now = localtime();
-		my @time_parts = split(' ', $right_now);
-			my $time_captured = $time_parts[3].' '.$time_parts[1].' '.$time_parts[2].', '.$time_parts[4];
+	my ($file, $origin_url, $time_captured) = (shift, shift, shift);
 
 	my $exifTool = new Image::ExifTool();
-		$exifTool->SetNewValue('Description', 'Captured from '.$origin_url.' at '.$right_now);
+		$exifTool->SetNewValue('Description', 'Captured from '.$origin_url.' at '.$time_captured);
 			my $write_info = $exifTool->WriteInfo($file);
 
 }
@@ -75,7 +81,7 @@ sub send_text_with_media {
 	my $ua = LWP::UserAgent->new;
 		$ua->agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:55.0) Gecko/20100101 Firefox/55.0');
 		$ua->cookie_jar(HTTP::Cookies->new);
-		$ua->timeout(10);
+		$ua->timeout(30);
 
 	my %text_notification = (
 		From => $from_number,
@@ -103,7 +109,7 @@ sub send_text_with_media {
 
 sub update_main_log {
 
-	my ($dbh, $url_captured, $image_url) = (shift, shift, shift);
+	my ($dbh, $url_captured, $image_url, $time_captured) = (shift, shift, shift, shift);
 
 	my $ua = LWP::UserAgent->new;
 	    $ua->agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:55.0) Gecko/20100101 Firefox/55.0');
@@ -122,10 +128,6 @@ sub update_main_log {
 		my $last_edited_row = ${$get_last_edited_row_result}{last_edited_row};
 			my @last_edited_row_parts = split('\,', $last_edited_row);
 				my $row_to_edit = ($last_edited_row_parts[0]+1).','.($last_edited_row_parts[1]+1);
-
-	my $right_now = localtime();
-		my @time_parts = split(' ', $right_now);
-			my $time_captured = $time_parts[3].' '.$time_parts[1].' '.$time_parts[2].', '.$time_parts[4];
 
 	my $update_spreadsheet_url_captured = $ua->post(
 		'https://docs.google.com/spreadsheets/u/1/d/1gSyECzO5QNPkwFYFUbRJkhj6WdfyF3x_SABpisXr7t0/save?id=1gSyECzO5QNPkwFYFUbRJkhj6WdfyF3x_SABpisXr7t0&sid='.$sid.'&vc=1&c=1&w=1&flr=0&smv=102&token='.$token.'&includes_info_params=true',

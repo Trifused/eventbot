@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
+    <title>Users</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext' type='text/css' media='all'>
+    <style>
+      .top-nav {
+        display: flow-root;
+      }
+      .top-nav .top-nav-left {
+        float: left;
+      }
+      .top-nav .top-nav-right {
+        float: right;
+      }
+      .bottom-logo {
+        position: absolute;
+        padding-top: 5%;
+      }
+      .bottom-logo img {
+        width: 15%;
+      }
+      .dontshow {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="top-nav" class="top-nav">
+    <div id="top-nav-left" class="top-nav-left">
+      [<a href="/portal">home</a>] [<a href="/portal/all">all submissions</a>] [<a href="/portal/users">users</a>] [<a href="/logout">logout</a>]
+    </div>
+  </div>
+    <div class="main-content" id="main-content">
+      % if ($error) {
+        <span style="font-weight: bold; color: red;">Error: <%= $error; %></span><br/>
+      % }
+      % if ($action eq 'updatepw') {
+        <h3>Update password for <%= $user_name; %></h3>
+          <br/>
+          <form method="post" id="user-update-form" class="user-update-form" action="<%= url_for('portalusersedit') %>" enctype="multipart/form-data">
+            <div id="password-field" class="password-field">
+              <strong>Password:</strong> <input type="password" name="pass">
+            </div>
+            <div id="password-field" class="password-field">
+              <strong>Repeat Password:</strong> <input type="password" name="pass_repeat">
+            </div>
+             <div id="form-submit" class="form-submit">
+              <input type="submit" value="Update">
+            </div>
+            <div id="user-id" class="user-id dontshow">
+              <input type="text" id="user_id" class="user_id" name="user_id" value="<%= $user_id; %>">
+            </div>
+            <div id="user-action" class="user-action dontshow">
+              <input type="text" id="user_action" class="user_action" name="user_action" value="<%= $action; %>">
+            </div>
+          </form>
+      % }
+      % if ($action eq 'delete') {
+        <form method="post" id="user-update-form" class="user-update-form" action="<%= url_for('portalusersedit') %>" enctype="multipart/form-data">
+          <div id="really-delete" class="really-delete">Really delete <%= $user_name; %>?</div>
+          <div id="form-submit" class="form-submit">
+            <input type="submit" value="Yes">
+          </div>
+          <div id="user-id" class="user-id dontshow">
+            <input type="text" id="user_id" class="user_id" name="user_id" value="<%= $user_id; %>">
+          </div>
+          <div id="user-action" class="user-action dontshow">
+            <input type="text" id="user_action" class="user_action" name="user_action" value="<%= $action; %>">
+          </div>
+          <div id="user-token" class="user-token dontshow">
+            <input type="text" id="user_token" class="user_token" name="user_token" value="<%= $token; %>">
+          </div>
+        </form>
+      % }
+    </div>
+  <div class="bottom-logo" id="bottom-logo">
+    <a href="https://paperhouse.io/" target="_blank"><img src="/paperhouse_logo.png" /></a>
+  </div>
+  </body>
+</html>
+

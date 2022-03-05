@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
-    <title>Portal</title>
+    <title>All Submissions</title>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext' type='text/css' media='all'>
     <style>
       .top-nav {
@@ -12,9 +12,6 @@
       }
       .top-nav .top-nav-right {
         float: right;
-      }
-      .new-submission form.new_submission {
-        display: inline-flex;
       }
       .bottom-logo {
         position: absolute;
@@ -32,27 +29,7 @@
     </div>
   </div>
   <div class="main-content" id="main-content">
-    % if ($error) {
-      <span style="font-weight: bold; color: red;">Error: <%= $error; %></span><br/>
-    % }
-    % if ($success) {
-      <span style="font-weight: bold; color: green;"><%= $success; %>!</span><br/>
-    % }
-    <div><p>Howdy, <%= $user %>.</p></div>
-  </div>
-  <div id="new-submission" class="new-submission">
-    <h4>New submission:</h4>
-    <form method="post" id="new_submission" class="new_submission" action="<%= url_for('portalsubmit'); %>" enctype="multipart/form-data">
-        <div id="user-field" class="user-field">
-          <strong>Url:</strong> <input type="text" id="url" class="url" name="url">
-        </div>
-         <div id="form-submit" class="form-submit">
-          <input type="submit" value="Submit">
-        </div>
-    </form>
-  </div>
-  <div id="recent-submissions" class="recent-submissions">
-    <h3>Most recent submissions:</h3>
+    <h3>All submissions:</h3>
     <table border="0">
       <tr>
         <td><strong><small>Type</small></strong></td>
@@ -62,15 +39,15 @@
         <td><strong><small>Status</small></strong></td>
         <td><strong><small>Time Captured</small></strong></td>
       </tr>
-      % foreach my $all_recent_submissions (@$recent_submissions) {
+      % foreach my $all_all_submissions (@$all_submissions) {
         <tr>
-          % foreach my $type (@$all_recent_submissions[0]) {
-            % foreach my $them_number (@$all_recent_submissions[1]) {
-              % foreach my $user (@$all_recent_submissions[2]) {
-               % foreach my $orig_url (@$all_recent_submissions[3]) {
-                % foreach my $filename (@$all_recent_submissions[4]) {
-                  % foreach my $time_captured (@$all_recent_submissions[5]) {
-                    % foreach my $status (@$all_recent_submissions[6]) {
+          % foreach my $type (@$all_all_submissions[0]) {
+            % foreach my $them_number (@$all_all_submissions[1]) {
+              % foreach my $user (@$all_all_submissions[2]) {
+               % foreach my $orig_url (@$all_all_submissions[3]) {
+                % foreach my $filename (@$all_all_submissions[4]) {
+                  % foreach my $time_captured (@$all_all_submissions[5]) {
+                    % foreach my $status (@$all_all_submissions[6]) {
                       <td><%= $type; %></td>
                       % if ($them_number) {
                         <td><%= $them_number; %></td>

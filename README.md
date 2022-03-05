@@ -6,6 +6,7 @@ This application provides a web-based Twilio bridge for sending and receiving te
 
 To start this application, navigate to its directory, and run
 	screen perl run.pl
+        screen perl queue.pl
 
 To stop this application, navigate to its directory, terimate any instances of run.pl, and run
 	hypnotoad lawrence.pl -s
