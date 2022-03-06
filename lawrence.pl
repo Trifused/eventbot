@@ -460,7 +460,7 @@ post '/portal/curl' => sub {
 
         my $filename = Lawrence::name_file().'.png';
 
-        my $add_to_queue = eval { $dbh->prepare('INSERT INTO entries (type, user, orig_url, filename, status) VALUES (\'web\', \''.$self->param('user').'\', \''.$self->param('url').'\', \''.$filename.'\', \'QUEUED\')') };
+        my $add_to_queue = eval { $dbh->prepare('INSERT INTO entries (type, user, orig_url, filename, status) VALUES (\'api\', \''.$self->param('user').'\', \''.$self->param('url').'\', \''.$filename.'\', \'QUEUED\')') };
           $add_to_queue->execute();
 
         $self->render(text => 'STATUS: 200 SUCCESS!'."\n\n".'Stored Url:'."\n".$domain.$filename."\n");

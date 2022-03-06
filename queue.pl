@@ -76,7 +76,7 @@ sub check_queue {
 
 		}
 
-		elsif ($type eq 'web') {
+		elsif (($type eq 'web') or ($type eq 'api')) {
 
 			my $ua = LWP::UserAgent->new;
 			    $ua->agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:55.0) Gecko/20100101 Firefox/55.0');
